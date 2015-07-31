@@ -37,7 +37,8 @@ BOARD_USES_QC_TIME_SERVICES := true
 
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg.mk
 TARGET_KERNEL_SOURCE := kernel/samsung/matisse
-TARGET_KERNEL_CONFIG := matissewifi_defconfig
+TARGET_KERNEL_CONFIG := twrp-matissewifi_defconfig
+TARGET_KERNEL_SELINUX_CONFIG := selinux_defconfig
 BOARD_KERNEL_SEPARATED_DT := true
 
 BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x37 androidboot.bootdevice=msm_sdcc.1
@@ -75,7 +76,7 @@ TW_FLASH_FROM_STORAGE := true
 TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 BOARD_SUPPRESS_SECURE_ERASE := true
-TW_HAS_DOWNLOAD_MODE := true
+#TW_HAS_DOWNLOAD_MODE := true
 
 MR_INPUT_TYPE := type_b
 MR_INIT_DEVICES := device/samsung/matisse/mr_init_devices.c
@@ -92,8 +93,8 @@ MR_PIXEL_FORMAT := "RGBX_8888"
 MR_USE_QCOM_OVERLAY := true
 MR_QCOM_OVERLAY_HEADER := device/samsung/matisse/mr_qcom_overlay.h
 MR_QCOM_OVERLAY_CUSTOM_PIXEL_FORMAT := MDP_RGBX_8888
-MR_DEVICE_VARIANTS := matisse matissewifi matisse3g matisselte matissewifiue
+MR_DEVICE_VARIANTS := matissewifi matisse3g matisselte matissewifiue
 
 # SELinux
--include device/qcom/sepolicy/sepolicy.mk
+#-include device/qcom/sepolicy/sepolicy.mk
 
