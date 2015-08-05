@@ -36,12 +36,18 @@ TARGET_LIBINIT_DEFINES_FILE := device/samsung/matisse/init_matisse.c
 
 # Kernel
 TARGET_PREBUILT_KERNEL := device/samsung/matisse/kernel
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg-pb.mk
+
+#TARGET_KERNEL_CONFIG := twrp-matissewifi_defconfig
+#BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg.mk
+
+TARGET_KERNEL_SOURCE := kernel/samsung/matisse
 BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x37 androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
-BOARD_MKBOOTIMG_ARGS := --dt device/samsung/matisse/dt.img --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x1e00000
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg.mk
+BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x1e00000
+
 
 # USB Mounting
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun0/file
@@ -82,5 +88,5 @@ MR_QCOM_OVERLAY_HEADER := device/samsung/matisse/mr_qcom_overlay.h
 MR_QCOM_OVERLAY_CUSTOM_PIXEL_FORMAT := MDP_RGBX_8888
 MR_CONTINUOUS_FB_UPDATE := true
 MR_DEVICE_VARIANTS := matissewifi matisse3g matisselte matissewifiue
-#MR_DEVICE_HOOKS := device/samsung/matisse/mr_hooks.c
-#MR_DEVICE_HOOKS_VER := 3
+MR_DEVICE_HOOKS := device/samsung/matisse/mr_hooks.c
+MR_DEVICE_HOOKS_VER := 3
