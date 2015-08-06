@@ -1,2 +1,2 @@
 # Run device patches on the tree
-#sh device/xiaomi/armani/patches/apply.sh
+sh device/samsung/matisse/patches/apply.sh
