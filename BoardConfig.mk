@@ -35,14 +35,14 @@ TARGET_INIT_VENDOR_LIB := libinit_msm
 TARGET_LIBINIT_DEFINES_FILE := device/samsung/matisse/init_matisse.c
 
 # Kernel
-TARGET_PREBUILT_KERNEL := device/samsung/matisse/kernel
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg-pb.mk
+#TARGET_PREBUILT_KERNEL := device/samsung/matisse/kernel
+#BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg-pb.mk
 
-#TARGET_KERNEL_CONFIG := twrp-matissewifi_defconfig
-#BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg.mk
+TARGET_KERNEL_CONFIG := twrp-matisse_defconfig
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg.mk
 
 TARGET_KERNEL_SOURCE := kernel/samsung/matisse
-BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x37 androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x37 androidboot.bootdevice=msm_sdcc.1
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
@@ -56,13 +56,20 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun0/f
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 BOARD_HAS_LARGE_FILESYSTEM := true
+BOARD_HAS_NO_MISC_PARTITION := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
+
 
 # TWRP-Specific
 RECOVERY_VARIANT := twrp
+TW_NEW_ION_HEAP := true
 TW_THEME := landscape_hdpi
 RECOVERY_SDCARD_ON_DATA := true
-TW_INCLUDE_CRYPTO := true
+TW_HAS_DOWNLOAD_MODE := true
+TW_INCLUDE_NTFS_3G := true
+TW_NO_EXFAT_FUSE := true
+#TW_INCLUDE_CRYPTO := true
 TW_INTERNAL_STORAGE_PATH := "/data/media"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
 TW_EXTERNAL_STORAGE_PATH := "/external_sd"

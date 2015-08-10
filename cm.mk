@@ -1,19 +1,8 @@
-LOCAL_PATH := device/samsung/matisse
+$(call inherit-product, device/samsung/matisse/full_matisse.mk)
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
+$(call inherit-product, vendor/cm/config/common_full_tablet_wifionly.mk)
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
-else
-	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
+#PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_NAME=SGH-I727 TARGET_DEVICE=SGH-I727 BUILD_FINGERPRINT="samsung/SGH-I727/SGH-I727:4.1.2/IMM76D/UCLI3:user/release-keys" PRIVATE_BUILD_DESC="SGH-I727-user 4.1.2 IMM76D UCLI3 release-keys"
 
-PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/kernel:kernel \
-    $(LOCAL_PATH)/dt.img:dt.img 
-
-PRODUCT_DEVICE := matisse
 PRODUCT_NAME := cm_matisse
-PRODUCT_BRAND := Samsung
-PRODUCT_MODEL := SM-T5XX
-PRODUCT_MANUFACTURER := Samsung
+PRODUCT_DEVICE := matisse
