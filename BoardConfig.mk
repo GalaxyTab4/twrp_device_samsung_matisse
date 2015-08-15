@@ -34,12 +34,12 @@ TARGET_UNIFIED_DEVICE := true
 TARGET_INIT_VENDOR_LIB := libinit_msm
 TARGET_LIBINIT_DEFINES_FILE := device/samsung/matisse/init_matisse.c
 
-PREBUILT_RECOVERY := true
-RECOVERY_VERSION := mrom20150815-01
+PREBUILT_RECOVERY := false
+RECOVERY_VERSION := twrp20150815-01
+RECOVERY_TYPE := twrp # twrp / mrwifi / mrlte
 
 ifeq ($(PREBUILT_RECOVERY),true)
 TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/matisse/kernel
-#TARGET_PREBUILT_KERNEL := device/samsung/matisse/kernel
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg-pb.mk
 else
 TARGET_KERNEL_CONFIG := twrp-matisse_defconfig
@@ -53,7 +53,6 @@ BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 
-
 # USB Mounting
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun0/file
 
@@ -64,7 +63,6 @@ BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_HAS_NO_MISC_PARTITION := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
-
 
 # TWRP-Specific
 RECOVERY_VARIANT := twrp
@@ -82,29 +80,42 @@ TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 BOARD_SUPPRESS_SECURE_ERASE := true
 
-#MultiROM config. MultiROM also uses parts of TWRP config
+ifeq ($(PREBUILT_TYPE),mrwifi)
 MR_INPUT_TYPE := type_b
 MR_INIT_DEVICES := device/samsung/matisse/mr_init_devices.c
 MR_DPI := hdpi
 MR_DPI_MUL := 1
 MR_DPI_FONT := 160
 MR_FSTAB := device/samsung/matisse/recovery.fstab
-
-#MATISSEWIFI & MATISSE3G
 MR_KEXEC_MEM_MIN := 0x06200000
 MR_DEVICE_VARIANTS := matissewifi matissewifiue matisse3g 
-
-#MATISSELTE
-#MR_KEXEC_MEM_MIN := 0x05500000
-#MR_DEVICE_VARIANTS := matisselte
-
-#MR_RD_ADDR := 0x02200000
 MR_KEXEC_DTB := true
 MR_PIXEL_FORMAT := "RGBX_8888"
 MR_USE_QCOM_OVERLAY := true
 MR_QCOM_OVERLAY_HEADER := device/samsung/matisse/mr_qcom_overlay.h
 MR_QCOM_OVERLAY_CUSTOM_PIXEL_FORMAT := MDP_RGBX_8888
 MR_CONTINUOUS_FB_UPDATE := true
-
 MR_DEVICE_HOOKS := device/samsung/matisse/mr_hooks.c
 MR_DEVICE_HOOKS_VER := 3
+else
+ifeq ($(PREBUILT_TYPE),mrlte)
+MR_INPUT_TYPE := type_b
+MR_INIT_DEVICES := device/samsung/matisse/mr_init_devices.c
+MR_DPI := hdpi
+MR_DPI_MUL := 1
+MR_DPI_FONT := 160
+MR_FSTAB := device/samsung/matisse/recovery.fstab
+MR_KEXEC_MEM_MIN := 0x05500000
+MR_DEVICE_VARIANTS := matisselte
+MR_KEXEC_DTB := true
+MR_PIXEL_FORMAT := "RGBX_8888"
+MR_USE_QCOM_OVERLAY := true
+MR_QCOM_OVERLAY_HEADER := device/samsung/matisse/mr_qcom_overlay.h
+MR_QCOM_OVERLAY_CUSTOM_PIXEL_FORMAT := MDP_RGBX_8888
+MR_CONTINUOUS_FB_UPDATE := true
+MR_DEVICE_HOOKS := device/samsung/matisse/mr_hooks.c
+MR_DEVICE_HOOKS_VER := 3
+else
+
+endif
+endif
