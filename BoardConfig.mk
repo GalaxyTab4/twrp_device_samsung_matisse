@@ -34,19 +34,24 @@ TARGET_UNIFIED_DEVICE := true
 TARGET_INIT_VENDOR_LIB := libinit_msm
 TARGET_LIBINIT_DEFINES_FILE := device/samsung/matisse/init_matisse.c
 
-# Kernel
-#TARGET_PREBUILT_KERNEL := device/samsung/matisse/kernel
-#BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg-pb.mk
+PREBUILT_RECOVERY := true
+RECOVERY_VERSION := mrom20150815-01
 
+ifeq ($(PREBUILT_RECOVERY),true)
+TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/matisse/kernel
+#TARGET_PREBUILT_KERNEL := device/samsung/matisse/kernel
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg-pb.mk
+else
 TARGET_KERNEL_CONFIG := twrp-matisse_defconfig
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg.mk
+endif
 
-TARGET_KERNEL_SOURCE := kernel/samsung/matisse
+TARGET_KERNEL_SOURCE := kernel/samsung/msm8226
 BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x37 androidboot.bootdevice=msm_sdcc.1
+BOARD_MKBOOTIMG_ARGS := --board $(RECOVERY_VERSION) --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x1e00000
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
-BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x1e00000
 
 
 # USB Mounting
@@ -67,8 +72,6 @@ TW_NEW_ION_HEAP := true
 TW_THEME := landscape_hdpi
 RECOVERY_SDCARD_ON_DATA := true
 TW_HAS_DOWNLOAD_MODE := true
-TW_INCLUDE_NTFS_3G := true
-TW_NO_EXFAT_FUSE := true
 #TW_INCLUDE_CRYPTO := true
 TW_INTERNAL_STORAGE_PATH := "/data/media"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
@@ -86,7 +89,15 @@ MR_DPI := hdpi
 MR_DPI_MUL := 1
 MR_DPI_FONT := 160
 MR_FSTAB := device/samsung/matisse/recovery.fstab
+
+#MATISSEWIFI & MATISSE3G
 MR_KEXEC_MEM_MIN := 0x06200000
+MR_DEVICE_VARIANTS := matissewifi matissewifiue matisse3g 
+
+#MATISSELTE
+#MR_KEXEC_MEM_MIN := 0x05500000
+#MR_DEVICE_VARIANTS := matisselte
+
 #MR_RD_ADDR := 0x02200000
 MR_KEXEC_DTB := true
 MR_PIXEL_FORMAT := "RGBX_8888"
@@ -94,6 +105,6 @@ MR_USE_QCOM_OVERLAY := true
 MR_QCOM_OVERLAY_HEADER := device/samsung/matisse/mr_qcom_overlay.h
 MR_QCOM_OVERLAY_CUSTOM_PIXEL_FORMAT := MDP_RGBX_8888
 MR_CONTINUOUS_FB_UPDATE := true
-MR_DEVICE_VARIANTS := matissewifi matisse3g matisselte matissewifiue
+
 MR_DEVICE_HOOKS := device/samsung/matisse/mr_hooks.c
 MR_DEVICE_HOOKS_VER := 3

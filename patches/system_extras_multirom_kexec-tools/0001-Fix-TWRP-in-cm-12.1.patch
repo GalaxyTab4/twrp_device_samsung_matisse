@@ -16,7 +16,7 @@ index d1fb092..5866dc9 100644
  
  const struct arm_mach arm_mach_shamu = {
 -    .boardnames = { "shamu", NULL },
-+    .boardnames = { "shamu", "falcon", "matissewifi", "matissewifiue", "matisse3g", "matisselte", "matisse", NULL },
++    .boardnames = { "shamu", "matissewifi", "matissewifiue", "matisse3g", "matisselte", "matisse", NULL },
      .choose_dtb = shamu_choose_dtb,
      .add_extra_regs = shamu_add_extra_regs,
  };
