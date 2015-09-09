@@ -1,6 +1,7 @@
-# Ramdisk
-#PRODUCT_COPY_FILES += \
-#    device/samsung/matisse/init.qcom.usb.rc:root/init.qcom.usb.rc \
-
 ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.adb.secure=0
+
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,device/samsung/matisse/sbin,root/sbin)
+
+

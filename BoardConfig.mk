@@ -34,19 +34,20 @@ TARGET_UNIFIED_DEVICE := true
 TARGET_INIT_VENDOR_LIB := libinit_msm
 TARGET_LIBINIT_DEFINES_FILE := device/samsung/matisse/init_matisse.c
 
-PREBUILT_RECOVERY := false
-RECOVERY_VERSION := twrp20150815-01
-RECOVERY_TYPE := twrp # twrp / mrwifi / mrlte
+PREBUILT_RECOVERY := true
+RECOVERY_VERSION := twrp20150909-01
+RECOVERY_TYPE := mrwifi # twrp / mrwifi / mrlte
 
 ifeq ($(PREBUILT_RECOVERY),true)
 TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/matisse/kernel
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg-pb.mk
 else
-TARGET_KERNEL_CONFIG := twrp-matisse_defconfig
+TARGET_KERNEL_CONFIG := twrp-matissewifi_defconfig
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg.mk
 endif
 
-TARGET_KERNEL_SOURCE := kernel/samsung/msm8226
+TARGET_RECOVERY_INITRC := device/samsung/matisse/init/init.recovery.qcom.rc
+TARGET_KERNEL_SOURCE := kernel/samsung/s3ve3g
 BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x37 androidboot.bootdevice=msm_sdcc.1
 BOARD_MKBOOTIMG_ARGS := --board $(RECOVERY_VERSION) --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x1e00000
 BOARD_KERNEL_BASE := 0x00000000
@@ -64,9 +65,10 @@ BOARD_HAS_NO_MISC_PARTITION := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 
+
 # TWRP-Specific
 RECOVERY_VARIANT := twrp
-TW_NEW_ION_HEAP := true
+#TW_NEW_ION_HEAP := true
 TW_THEME := landscape_hdpi
 #TW_THEME := portrait_hdpi
 #TW_THEME_LANDSCAPE := landscape_hdpi
@@ -81,7 +83,7 @@ TW_DEFAULT_EXTERNAL_STORAGE := true
 TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 BOARD_SUPPRESS_SECURE_ERASE := true
-TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
+#TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
 
 ifeq ($(PREBUILT_TYPE),mrwifi)
 MR_INPUT_TYPE := type_b
@@ -122,3 +124,24 @@ else
 
 endif
 endif
+
+# Block_Build
+Bliss_Build_Block := 1
+
+# BlissPop Configs
+BLISS_WIPE_CACHES := 0
+BLISSIFY := true
+BLISS_O3 := true
+BLISS_GRAPHITE := true
+BLISS_STRICT := true
+BLISS_KRAIT := true
+BLISS_PIPE := true
+TARGET_TC_ROM := 5.1-linaro
+TARGET_TC_KERNEL := 5.1-sm
+TARGET_GCC_VERSION_EXP := $(TARGET_TC_ROM)
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := $(TARGET_TC_KERNEL)
+WITH_LZMA_OTA := true
+
+#SaberMod
+-include vendor/bliss/config/sm.mk
+

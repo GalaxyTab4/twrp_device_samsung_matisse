@@ -1,0 +1,46 @@
+if [[ ! -f /etc/profile ]]; then
+cp /sbin/profile /etc/profile
+fi
+
+if [[ ! -f /system/bin ]]; then
+mkdir -p /system/bin
+fi
+
+if [[ ! -f /system/bin/linker ]]; then
+ln -s /sbin/linker /system/bin/
+fi
+
+if [[ ! -f /sbin/dropbear_dss_host_key ]]; then
+/sbin/dropbearkey -t dss -f /sbin/dropbear_dss_host_key
+else
+chmod 600 /sbin/dropbear_dss_host_key
+fi
+
+if [[ ! -f /sbin/dropbear_rsa_host_key ]]; then
+/sbin/dropbearkey -t rsa -f /sbin/dropbear_rsa_host_key
+else
+chmod 600 /sbin/dropbear_rsa_host_key
+fi
+
+if [[ -f /sdcard/.ssh/sshd.conf ]]; then
+. /sdcard/.ssh/sshd.conf 
+/sbin/dropbear -A -N root -U 0 -G 0 -C "$PASS" -p "$PORT" -f "$KEYFILE"
+else
+/sbin/dropbear -A -N root -U 0 -G 0 -C admin -b /sbin/motd-noconf -m
+fi
+
+echo "Check if Dropbear is running..."
+
+echo ""
+
+ps | grep dropbear
+
+echo "" 
+
+echo "done"
+
+exit 0
+
+
+
+
