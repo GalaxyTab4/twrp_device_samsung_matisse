@@ -1,0 +1,31 @@
+From 5789e194fd6f682bd90c03fd2b793df1cced1ee1 Mon Sep 17 00:00:00 2001
+From: sub77 <sub77@ymail.com>
+Date: Tue, 22 Sep 2015 21:34:36 +0200
+Subject: [PATCH] RECOVERY_VARIANT := mr
+
+---
+ Android.mk | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/Android.mk b/Android.mk
+index 1b1abec..b780153 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -14,6 +14,8 @@
+ 
+ LOCAL_PATH := $(call my-dir)
+ 
++ifeq ($(RECOVERY_VARIANT),mr)
++
+ ifdef project-path-for
+     ifeq ($(LOCAL_PATH),$(call project-path-for,recovery))
+         PROJECT_PATH_AGREES := true
+@@ -587,3 +589,5 @@ endif
+ commands_recovery_local_path :=
+ 
+ endif
++
++endif
+-- 
+2.1.4
+

@@ -51,7 +51,7 @@ TARGET_UNIFIED_DEVICE := true
 TARGET_INIT_VENDOR_LIB := libinit_msm
 TARGET_LIBINIT_DEFINES_FILE := device/samsung/matisse/init_matisse.c
 
-TARGET_RECOVERY_INITRC := device/samsung/matisse/init/init.recovery.qcom.rc
+TARGET_RECOVERY_INITRC := device/samsung/matisse/init.recovery.qcom.rc
 TARGET_KERNEL_SOURCE := kernel/samsung/s3ve3g
 BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x37 androidboot.bootdevice=msm_sdcc.1
 BOARD_MKBOOTIMG_ARGS := --board $(RECOVERY_VERSION) --dt device/samsung/matisse/dt.img --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x1e00000
