@@ -1,0 +1,4 @@
+#!/sbin/sh
+
+export PATH=/sbin:/system/sbin:/system/bin:/system/xbin
+/sbin/busybox run-parts /sdcard/.ssh/init.d

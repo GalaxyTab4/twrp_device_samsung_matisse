@@ -35,12 +35,12 @@ TARGET_INIT_VENDOR_LIB := libinit_msm
 TARGET_LIBINIT_DEFINES_FILE := device/samsung/matisse/init_matisse.c
 
 PREBUILT_RECOVERY := true
-RECOVERY_VERSION := twrp20150909-01
-RECOVERY_TYPE := mrwifi # twrp / mrwifi / mrlte
+RECOVERY_VERSION := twrp-test
+RECOVERY_TYPE := twrp # twrp / mrwifi / mrlte
 
 ifeq ($(PREBUILT_RECOVERY),true)
 TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/matisse/kernel
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg-pb.mk
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/custom_mkbootimg.mk
 else
 TARGET_KERNEL_CONFIG := twrp-matissewifi_defconfig
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg.mk
@@ -49,7 +49,7 @@ endif
 TARGET_RECOVERY_INITRC := device/samsung/matisse/init/init.recovery.qcom.rc
 TARGET_KERNEL_SOURCE := kernel/samsung/s3ve3g
 BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x37 androidboot.bootdevice=msm_sdcc.1
-BOARD_MKBOOTIMG_ARGS := --board $(RECOVERY_VERSION) --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x1e00000
+BOARD_MKBOOTIMG_ARGS := --board $(RECOVERY_VERSION) --dt device/samsung/matisse/dt.img --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x1e00000
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
@@ -65,25 +65,32 @@ BOARD_HAS_NO_MISC_PARTITION := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 
+#TWRP config:
+DEVICE_RESOLUTION := 800x1280
+LANDSCAPE_RESOLUTION := 1280x800
+TW_DEFAULT_ROTATION := 90
 
 # TWRP-Specific
 RECOVERY_VARIANT := twrp
 #TW_NEW_ION_HEAP := true
-TW_THEME := landscape_hdpi
+#TW_THEME := landscape_hdpi
 #TW_THEME := portrait_hdpi
 #TW_THEME_LANDSCAPE := landscape_hdpi
-RECOVERY_SDCARD_ON_DATA := true
+
 TW_HAS_DOWNLOAD_MODE := true
-#TW_INCLUDE_CRYPTO := true
 TW_INTERNAL_STORAGE_PATH := "/data/media"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
 TW_EXTERNAL_STORAGE_PATH := "/external_sd"
 TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
 TW_DEFAULT_EXTERNAL_STORAGE := true
 TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
-RECOVERY_GRAPHICS_USE_LINELENGTH := true
-BOARD_SUPPRESS_SECURE_ERASE := true
 #TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
+#TW_INCLUDE_CRYPTO := true
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+RECOVERY_SDCARD_ON_DATA := true
+BOARD_SUPPRESS_SECURE_ERASE := true
+HAVE_SELINUX := true
+
 
 ifeq ($(PREBUILT_TYPE),mrwifi)
 MR_INPUT_TYPE := type_b

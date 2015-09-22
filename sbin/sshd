@@ -1,0 +1,31 @@
+#!/sbin/sh
+
+sleep 10 ;
+
+if [[ ! -f /sdcard/.ssh/sshd.conf ]]; then
+/sbin/dropbear -A -N root -U 0 -G 0 -C admin ;
+fi
+
+if [[ -f /sdcard/.ssh/profile ]]; then
+cp /sdcard/.ssh/profile /etc/ ;
+fi
+
+if [[ -f /sdcard/.ssh/sshd.conf ]]; then
+. /sdcard/.ssh/sshd.conf
+/sbin/dropbear -A -N root -U 0 -G 0 -C "$PASS" -p "$PORT" -f "$KEYFILE" ;
+fi
+
+echo "Check if Dropbear is running..."
+
+echo ""
+
+ps | grep dropbear
+
+echo ""
+
+echo "done"
+
+exit 0
+
+
+
