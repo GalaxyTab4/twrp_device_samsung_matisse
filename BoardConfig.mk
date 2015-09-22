@@ -1,3 +1,16 @@
+
+PREBUILT_RECOVERY := true
+RECOVERY_VERSION := twrp20150922
+RECOVERY_TYPE := mrwifi # twrp / mrwifi / mrlte
+
+ifeq ($(PREBUILT_RECOVERY),true)
+TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/matisse/kernel
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/custom_mkbootimg.mk
+else
+TARGET_KERNEL_CONFIG := twrp-matissewifi_defconfig
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg.mk
+endif
+
 # Bootloader
 TARGET_NO_BOOTLOADER := true
 TARGET_BOOTLOADER_BOARD_NAME := MSM8226
@@ -14,14 +27,18 @@ TARGET_CPU_SMP := true
 TARGET_CPU_VARIANT := krait
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-# Filesystem
-BOARD_BOOTIMAGE_PARTITION_SIZE     := 16777216
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216
-BOARD_SYSTEMIMAGE_PARTITION_SIZE   := 838860800
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 6241112064
-BOARD_CACHEIMAGE_PARTITION_SIZE    := 402653184
-BOARD_PERSISTIMAGE_PARTITION_SIZE  := 33554432
-BOARD_FLASH_BLOCK_SIZE             := 131072
+# Partitions
+BOARD_FLASH_BLOCK_SIZE := 131072
+BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00A00000
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x00A7DEA0
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2097152000
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 12562627584
+BOARD_USES_MMCUTILS := true
+BOARD_HAS_LARGE_FILESYSTEM := true
+BOARD_HAS_NO_MISC_PARTITION := true
+BOARD_HAS_NO_SELECT_BUTTON := true
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
 
 # Flags
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
@@ -34,18 +51,6 @@ TARGET_UNIFIED_DEVICE := true
 TARGET_INIT_VENDOR_LIB := libinit_msm
 TARGET_LIBINIT_DEFINES_FILE := device/samsung/matisse/init_matisse.c
 
-PREBUILT_RECOVERY := true
-RECOVERY_VERSION := twrp-test
-RECOVERY_TYPE := twrp # twrp / mrwifi / mrlte
-
-ifeq ($(PREBUILT_RECOVERY),true)
-TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/matisse/kernel
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/custom_mkbootimg.mk
-else
-TARGET_KERNEL_CONFIG := twrp-matissewifi_defconfig
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/matisse/mkbootimg.mk
-endif
-
 TARGET_RECOVERY_INITRC := device/samsung/matisse/init/init.recovery.qcom.rc
 TARGET_KERNEL_SOURCE := kernel/samsung/s3ve3g
 BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x37 androidboot.bootdevice=msm_sdcc.1
@@ -54,29 +59,8 @@ BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 
-# USB Mounting
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun0/file
-
-# Recovery
-TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
-BOARD_HAS_LARGE_FILESYSTEM := true
-BOARD_HAS_NO_MISC_PARTITION := true
-TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
-COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
-
 #TWRP config:
-#DEVICE_RESOLUTION := 800x1280
-#LANDSCAPE_RESOLUTION := 1280x800
-#TW_DEFAULT_ROTATION := 90
-
-# TWRP-Specific
-RECOVERY_VARIANT := twrp
 #TW_NEW_ION_HEAP := true
-TW_THEME := landscape_hdpi
-#TW_THEME := portrait_hdpi
-#TW_THEME_LANDSCAPE := landscape_hdpi
-
 TW_HAS_DOWNLOAD_MODE := true
 TW_INTERNAL_STORAGE_PATH := "/data/media"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
@@ -89,8 +73,19 @@ TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 RECOVERY_SDCARD_ON_DATA := true
 BOARD_SUPPRESS_SECURE_ERASE := true
+TW_NO_REBOOT_BOOTLOADER := true
 HAVE_SELINUX := true
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
+TARGET_RECOVERY_DEVICE_DIRS += device/samsung/matisse
 
+ifeq ($(PREBUILT_TYPE),twrp)
+RECOVERY_VARIANT := twrp
+TW_CUSTOM_THEME := $(LOCAL_PATH)/theme/rework
+else
+RECOVERY_VARIANT := mr
+TW_THEME := landscape_hdpi
+endif
 
 ifeq ($(PREBUILT_TYPE),mrwifi)
 MR_INPUT_TYPE := type_b
@@ -131,6 +126,18 @@ else
 
 endif
 endif
+
+# Charging mode
+BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
+BOARD_BATTERY_DEVICE_NAME := "battery"
+BOARD_CHARGING_CMDLINE_NAME := "androidboot.mode"
+BOARD_CHARGING_CMDLINE_VALUE := "charger"
+BOARD_CHARGER_ENABLE_SUSPEND := true
+BOARD_CHARGER_SHOW_PERCENTAGE := true
+
+# Vold 
+BOARD_UMS_LUNFILE 				:= /sys/devices/platform/msm_hsusb/gadget/lun0/file
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun0/file
 
 # Block_Build
 Bliss_Build_Block := 1
