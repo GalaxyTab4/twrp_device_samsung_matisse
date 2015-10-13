@@ -24,9 +24,6 @@ PRODUCT_COPY_FILES += \
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
-# Proprietary files
-$(call inherit-product, vendor/samsung/matisse/matisse-vendor.mk)
-
 # Audio configuration
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_platform_info.xml:system/etc/audio_platform_info.xml \
@@ -82,5 +79,3 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/boot_matisse3g.img:install/kernel/boot_matisse3g.img \
     $(LOCAL_PATH)/prebuilt/boot_matisselte.img:install/kernel/boot_matisselte.img
 
-# Inherit from qcom-common
-$(call inherit-product, device/samsung/msm8226-common/msm8226.mk)

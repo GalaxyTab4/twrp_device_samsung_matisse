@@ -1,0 +1,45 @@
+From aa437df1353b662cad7a67edb993b01faa850a33 Mon Sep 17 00:00:00 2001
+From: sub77 <sub77@ymail.com>
+Date: Tue, 13 Oct 2015 22:59:56 +0200
+Subject: [PATCH 1/2] dumpvars twrp
+
+Change-Id: Ibc110fd6c2ee708799b3f6bf3cc21d9f613936a0
+---
+ core/dumpvar.mk | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/core/dumpvar.mk b/core/dumpvar.mk
+index 3a0da6f..8d20e7b 100644
+--- a/core/dumpvar.mk
++++ b/core/dumpvar.mk
+@@ -147,4 +147,27 @@ ADDITIONAL_BUILD_PROPERTIES += \
+ endif
+ 
+ $(info ============================================)
++
++ifdef ROM_TYPE
++$(info   ROM_TYPE=$(ROM_TYPE))
++else
++$(info   ROM_TYPE=false)
++endif
++ifdef TWRP_TYPE
++$(info   TWRP_TYPE=$(TWRP_TYPE))
++else
++$(info   TWRP_TYPE=false)
++endif
++ifdef TWRP_VERSION
++$(info   TWRP_VERSION=$(TWRP_VERSION))
++else
++$(info   TWRP_VERSION=false)
++endif
++ifdef TWRP_PRE
++$(info   TWRP_PRE=$(TWRP_VERSION))
++else
++$(info   TWRP_PRE=false)
++endif
++
++$(info ============================================)
+ endif
+-- 
+2.6.1
+

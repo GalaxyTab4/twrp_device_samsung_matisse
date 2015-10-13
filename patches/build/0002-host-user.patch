@@ -1,0 +1,28 @@
+From 9de9f378c2a4dcb01d4b5edb336fe128305d0f4d Mon Sep 17 00:00:00 2001
+From: sub77 <sub77@ymail.com>
+Date: Tue, 13 Oct 2015 23:00:11 +0200
+Subject: [PATCH 2/2] host/user
+
+Change-Id: I91dc7075d960155297cbca99552ee696c58d2d5b
+---
+ envsetup.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/envsetup.sh b/envsetup.sh
+index 46e9995..dc351fe 100644
+--- a/envsetup.sh
++++ b/envsetup.sh
+@@ -182,8 +182,8 @@ function setpaths()
+     export HOST_NAME=$(get_build_var HOST_NAME)
+     export USER=$(get_build_var USER)
+     # For kernel
+-    export KBUILD_BUILD_USER=$(USER)
+-    export KBUILD_BUILD_HOST=$(HOST_NAME)
++    export KBUILD_BUILD_USER=$USER
++    export KBUILD_BUILD_HOST=$HOST_NAME
+ 
+     unset ANDROID_KERNEL_TOOLCHAIN_PATH
+     case $ARCH in
+-- 
+2.6.1
+

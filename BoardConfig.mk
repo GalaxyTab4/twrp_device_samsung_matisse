@@ -12,15 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Inherit from msm8226-common
--include device/samsung/msm8226-common/BoardConfigCommon.mk
-
 TARGET_OTA_ASSERT_DEVICE := matissewifi,matissewifiue,matisse3g,matisselte,matisse
 
 LOCAL_PATH := device/samsung/matisse
 
-# Audio
-#AUDIO_FEATURE_SAMSUNG_DUAL_SIM := true
+ROM_TYPE := bosp
+
+TWRP_TYPE := test
+
+TWRP_VERSION := test
+
+TWRP_PRE := test
+
+# Architecture
+TARGET_ARCH := arm
+TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_CPU_ABI := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
+TARGET_CPU_SMP := true
+TARGET_CPU_VARIANT := krait
+ARCH_ARM_HAVE_TLS_REGISTER := true
 
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
@@ -53,6 +64,8 @@ TARGET_USERIMAGES_USE_F2FS := true
 # Recovery
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/rootdir/fstab.qcom
 
+ifeq ($(ROM_TYPE),bosp)
+
 # Releasetools
 TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/matisse
 
@@ -77,3 +90,5 @@ WITH_LZMA_OTA := false
 
 #SaberMod
 -include vendor/bliss/config/sm.mk
+
+endif
