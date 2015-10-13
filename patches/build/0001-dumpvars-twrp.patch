@@ -33,7 +33,7 @@ index 3a0da6f..8d20e7b 100644
 +$(info   TWRP_VERSION=false)
 +endif
 +ifdef TWRP_PRE
-+$(info   TWRP_PRE=$(TWRP_VERSION))
++$(info   TWRP_PRE=$(TWRP_PRE))
 +else
 +$(info   TWRP_PRE=false)
 +endif

@@ -1,4 +1,4 @@
-From e9eec9d0f3a16c5ca59f37beadb22953ed123a6d Mon Sep 17 00:00:00 2001
+From 0a561e8358708f0046d0ccd806b2fd30b45a00db Mon Sep 17 00:00:00 2001
 From: sub77-bkp <sub77@ymail.com>
 Date: Thu, 4 Jun 2015 03:52:53 +0200
 Subject: [PATCH 2/3] matissewifi: Fix Build Error if DVFS is disabled
@@ -148,5 +148,5 @@ index 4ffe6d1..8dfbcc3 100644
  #endif
 +#endif
 -- 
-1.9.1
+2.6.1
 
