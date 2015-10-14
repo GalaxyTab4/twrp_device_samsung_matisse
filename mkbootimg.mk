@@ -1,7 +1,5 @@
 LOCAL_PATH := $(call my-dir)
 
-LZMA_BIN := /usr/bin/lzma
-
 ifeq ($(TWRP_PRE),true)
 
 $(INSTALLED_BOOTIMAGE_TARGET): $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_FILES)
@@ -10,17 +8,18 @@ $(INSTALLED_BOOTIMAGE_TARGET): $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_FILES)
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_BOOTIMAGE_PARTITION_SIZE),raw)
 	@echo -e ${CL_CYN}"Made boot image: $@"${CL_RST}
 
+LZMA_RAMDISK := $(PRODUCT_OUT)/ramdisk-recovery-lzma.img
+
+$(LZMA_RAMDISK): $(recovery_ramdisk)
+	gunzip -f < $(recovery_ramdisk) | lzma -e > $@
+
 $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) \
-		$(recovery_ramdisk) \
+		$(LZMA_RAMDISK) \
 		$(recovery_kernel)
-	@echo ----- Compressing recovery ramdisk with lzma ------
-	rm -f $(recovery_uncompressed_ramdisk).lzma
-	$(LZMA_BIN) $(recovery_uncompressed_ramdisk)
-	$(hide) cp $(recovery_uncompressed_ramdisk).lzma $(recovery_ramdisk)
-	@echo ----- Making recovery image ------
-	$(MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --dt $(LOCAL_PATH)/kernel/dt.img --output $@
-	@echo ----- Made recovery image -------- $@
+	@echo -e ${CL_CYN}"----- Making recovery image ------"${CL_RST}
+	$(hide) $(MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) -dt $(LOCAL_PATH)/kernel/dt.img --output $@ --ramdisk $(LZMA_RAMDISK)
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_RECOVERYIMAGE_PARTITION_SIZE),raw)
+	@echo -e ${CL_CYN}"Made recovery image: $@"${CL_RST}
 
 else
 
@@ -57,16 +56,17 @@ $(INSTALLED_BOOTIMAGE_TARGET): $(MKBOOTIMG) $(INTERNAL_BOOTIMAGE_FILES) $(INSTAL
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_BOOTIMAGE_PARTITION_SIZE),raw)
 	@echo -e ${CL_CYN}"Made boot image: $@"${CL_RST}
 
+LZMA_RAMDISK := $(PRODUCT_OUT)/ramdisk-recovery-lzma.img
+
+$(LZMA_RAMDISK): $(recovery_ramdisk)
+	gunzip -f < $(recovery_ramdisk) | lzma -e > $@
+
 $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) $(INSTALLED_DTIMAGE_TARGET) \
-		$(recovery_ramdisk) \
+		$(LZMA_RAMDISK) \
 		$(recovery_kernel)
-	@echo ----- Compressing recovery ramdisk with lzma ------
-	rm -f $(recovery_uncompressed_ramdisk).lzma
-	$(LZMA_BIN) $(recovery_uncompressed_ramdisk)
-	$(hide) cp $(recovery_uncompressed_ramdisk).lzma $(recovery_ramdisk)
-	@echo ----- Making recovery image ------
-	$(MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --dt $(INSTALLED_DTIMAGE_TARGET) --output $@
-	@echo ----- Made recovery image -------- $@
+	@echo -e ${CL_CYN}"----- Making recovery image ------"${CL_RST}
+	$(hide) $(MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --dt $(INSTALLED_DTIMAGE_TARGET) --output $@ --ramdisk $(LZMA_RAMDISK)
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_RECOVERYIMAGE_PARTITION_SIZE),raw)
+	@echo -e ${CL_CYN}"Made recovery image: $@"${CL_RST}
 
 endif
