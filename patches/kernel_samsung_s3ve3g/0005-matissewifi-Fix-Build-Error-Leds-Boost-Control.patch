@@ -1,7 +1,7 @@
-From 6a0bcd3b5d221b9b11b28df2161abe20c85f72ab Mon Sep 17 00:00:00 2001
+From 148888bf61ea72085cef69e8bfc1254426f34280 Mon Sep 17 00:00:00 2001
 From: sub77-bkp <sub77@ymail.com>
 Date: Thu, 4 Jun 2015 03:53:17 +0200
-Subject: [PATCH 3/3] matissewifi: Fix Build Error Leds Boost Control
+Subject: [PATCH 5/6] matissewifi: Fix Build Error Leds Boost Control
 
 Change-Id: I30b8d7a8520f78cef6619689dafee79b54240a87
 ---

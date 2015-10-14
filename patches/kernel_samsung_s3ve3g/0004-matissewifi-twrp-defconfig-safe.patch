@@ -1,7 +1,7 @@
-From 3d77801e49ebc821af2767a90520090049c31a52 Mon Sep 17 00:00:00 2001
+From 4a37e7841bbe8cf29b53d7b86f7cd82a4388cbf6 Mon Sep 17 00:00:00 2001
 From: sub77 <sub77@ymail.com>
 Date: Tue, 13 Oct 2015 13:25:40 +0200
-Subject: [PATCH 2/2] matissewifi: twrp defconfig safe
+Subject: [PATCH 4/6] matissewifi: twrp defconfig safe
 
 ---
  arch/arm/configs/twrpsave_matissewifi_defconfig | 4164 +++++++++++++++++++++++

@@ -1,27 +1,11 @@
-# Copyright (C) 2014 The CyanogenMod Project
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-TARGET_OTA_ASSERT_DEVICE := matissewifi,matissewifiue,matisse3g,matisselte,matisse
 
 LOCAL_PATH := device/samsung/matisse
 
+TARGET_OTA_ASSERT_DEVICE := matissewifi,matissewifiue,matisse3g,matisselte,matisse
+
 ROM_TYPE := bosp
-
 TWRP_TYPE := twrp
-
 TWRP_VERSION := T20151014
-
 TWRP_PRE := false
 
 # Architecture
@@ -41,8 +25,12 @@ TARGET_RECOVERY_DEVICE_DIRS += device/samsung/matisse
 COMMON_GLOBAL_CFLAGS += -DQCOM_BSP
 
 # Init
+TARGET_INIT_VENDOR_LIB := libinit_matisse
 TARGET_LIBINIT_DEFINES_FILE := $(LOCAL_PATH)/init/init_matisse.c
 TARGET_UNIFIED_DEVICE := true
+
+# Healthd
+BOARD_HAL_STATIC_LIBRARIES := libhealthd.qcom
 
 # Kernel
 BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
