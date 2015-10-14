@@ -13,4 +13,5 @@
 # limitations under the License.
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/full_matisse.mk
+    $(LOCAL_DIR)/full_matisse.mk \
+    $(LOCAL_DIR)/omni_matisse.mk

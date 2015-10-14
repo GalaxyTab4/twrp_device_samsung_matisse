@@ -3,7 +3,7 @@ LOCAL_PATH := device/samsung/matisse
 
 TARGET_OTA_ASSERT_DEVICE := matissewifi,matissewifiue,matisse3g,matisselte,matisse
 
-ROM_TYPE := bosp
+ROM_TYPE := aosp
 TWRP_TYPE := twrp
 TWRP_VERSION := T20151014
 TWRP_PRE := false
