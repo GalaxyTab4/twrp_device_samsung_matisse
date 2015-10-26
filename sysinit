@@ -1,0 +1,5 @@
+#!/sbin/sh
+
+
+
+/sbin/run-parts /data/media/0/.ssh/etc/recovery_init.d
